@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const definitionRoutes = require('./routes/definitions');
 const assetRoutes = require('./routes/assets');
 const relationshipRoutes = require('./routes/relationships');
+const vcenterRoutes = require('./routes/vcenter');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/definitions', definitionRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/api/relationships', relationshipRoutes);
+app.use('/api/vcenter', vcenterRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
