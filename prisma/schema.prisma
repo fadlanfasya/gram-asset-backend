@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         String   @default("user")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Definition {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  icon        String?
+  color       String?
+  fields      Json     // Array of field definitions
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  assets      Asset[]
+}
+
+model Asset {
+  id            String         @id @default(uuid())
+  name          String
+  definitionId  String
+  definition    Definition     @relation(fields: [definitionId], references: [id])
+  status        String         @default("active")
+  tags          String[]       // Array of tags
+  description   String?
+  fieldValues   Json           // Object containing dynamic field values
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  
+  // Relationships
+  outgoingRelationships Relationship[] @relation("SourceAsset")
+  incomingRelationships Relationship[] @relation("TargetAsset")
+}
+
+model Relationship {
+  id        String   @id @default(uuid())
+  sourceId  String
+  source    Asset    @relation("SourceAsset", fields: [sourceId], references: [id])
+  targetId  String
+  target    Asset    @relation("TargetAsset", fields: [targetId], references: [id])
+  type      String
+  label     String?
+  createdAt DateTime @default(now())
+}

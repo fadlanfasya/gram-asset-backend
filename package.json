@@ -1,0 +1,24 @@
+{
+    "name": "gram-backend",
+    "version": "1.0.0",
+    "description": "Backend for Gram application",
+    "main": "src/app.js",
+    "scripts": {
+        "start": "node src/app.js",
+        "dev": "nodemon src/app.js",
+        "prisma": "prisma",
+        "db:migrate": "prisma migrate dev"
+    },
+    "dependencies": {
+        "@prisma/client": "^6.3.1",
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.1",
+        "express": "^4.21.2",
+        "jsonwebtoken": "^9.0.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.3",
+        "prisma": "^6.3.1"
+    }
+}
